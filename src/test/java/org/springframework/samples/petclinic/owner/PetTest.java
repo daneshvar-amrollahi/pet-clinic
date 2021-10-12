@@ -60,8 +60,6 @@ public class PetTest {
 			}
 		  });
 	
-		System.out.println(expected);
-		System.out.println(pet.getVisits());
 		assertEquals(expected, pet.getVisits());
 
 	}

@@ -3,6 +3,10 @@ package org.springframework.samples.petclinic.owner;
 import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
+
+import org.junit.experimental.theories.FromDataPoints;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.junit.experimental.theories.DataPoints;
@@ -11,7 +15,6 @@ import org.junit.experimental.theories.Theory;
 import org.junit.jupiter.api.BeforeEach;
 import static java.util.Arrays.asList;
 
-@RunWith(Theories.class)
 class OwnerTest {
     private Owner owner;
 
@@ -72,24 +75,5 @@ class OwnerTest {
         List<Pet> expected = new ArrayList<Pet>();
         expected.add(pet2);
         assertEquals(expected, owner.getPets());
-    }
-
-    @DataPoints
-    public static List<String> pet_names() {
-        List<String> pet_names = asList("zac", null, "cat", "pat", "");
-        return pet_names;
-    }
-
-
-    @Theory
-    public void testGetPet(String name) {
-        assumeTrue("Name can not be empty!", name.length() > 0);
-        assumeTrue("Name can not be null!", name != null);
-
-        Pet pet = new Pet();
-        pet.setName(name);
-        owner.addPet(pet);
-
-        assertEquals(pet, owner.getPet(name));
     }
 }

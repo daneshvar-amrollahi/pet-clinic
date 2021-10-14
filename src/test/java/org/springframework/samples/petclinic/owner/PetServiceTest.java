@@ -28,11 +28,12 @@ class PetServiceTest {
     PetService petService;
 
 	@ParameterizedTest
-	@ValueSource(ints = {14, 1000, 1001, 1010, -1})
+	@ValueSource(ints = {11, 10, 7, 13, 9, 1})
     void findPetTest(int petId) {
         assumeNotNull(owner);
-        System.out.println("Testing with petId " + petId);
+        assumeTrue("PetId must be positive", petId > 0);
     	Pet pet = petService.findPet(petId);
-        assumeFalse("Found pet is null",pet != null);
+        assumeTrue("Found pet is null",pet != null);
+		assertEquals(petId, pet.getId());
     }
 }

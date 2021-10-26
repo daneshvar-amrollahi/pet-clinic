@@ -16,31 +16,25 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.samples.petclinic.utility.PetTimedCache;
 import org.springframework.samples.petclinic.utility.SimpleDI;
+import org.springframework.samples.petclinic.visit.Visit;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.assertj.core.util.Arrays;
 
 @RunWith(MockitoJUnitRunner.class)
 class PetManagerTest {
-
-    // @Autowired
-    // PetManager petManager;
-    
-    // @Test
-    // void findOwnerTest()
-    // {
-    //     int ownerId = 4;
-    //     Owner returnedOwner = petManager.findOwner(ownerId);
-    //     assertEquals(petManager.findOwner(ownerId).getId(), returnedOwner.getId());
-    // }
 
     @InjectMocks
     PetManager petManagerWithMocks;
@@ -114,4 +108,42 @@ class PetManagerTest {
             verify(mockPetManager).findOwner(ownerId);
         }
     }
+
+    @Nested
+    @RunWith(SpringRunner.class)
+    @SpringBootTest
+    class ActualPetManagerTest {
+        @Autowired
+        PetManager petManager;
+
+        @Test
+        void getOwnerPetTypesTest() {
+            int ownerId = 3;
+            Set<PetType> actual = petManager.getOwnerPetTypes(ownerId);
+            PetType petType = new PetType();
+            petType.setName("dog");
+            Set<PetType> expected = new HashSet<>();
+            expected.add(petType);
+            
+            assertTrue(actual.size() == 1);
+            PetType ptActual = actual.iterator().next();
+            assertTrue(ptActual.getName().equals(petType.getName()));
+        }
+
+        @Test
+        void getVisitsBetweenTest() {
+            int petId = 8;
+            LocalDate startDate = LocalDate.of(2000, 1, 1);
+            LocalDate endDate = LocalDate.of(2020, 12, 12);
+            List<Visit> actual = petManager.getVisitsBetween(petId, startDate, endDate);
+            
+            assumeTrue(actual.size() > 0);
+            String visit1descr = actual.get(0).getDescription();
+            String visit2descr = actual.get(1).getDescription();
+            assertTrue(visit1descr.equals("rabies shot"));
+            assertTrue(visit2descr.equals("neutered"));
+        }
+    }
+
+    
 }

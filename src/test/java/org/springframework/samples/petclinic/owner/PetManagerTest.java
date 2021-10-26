@@ -53,14 +53,17 @@ class PetManagerTest {
         MockitoAnnotations.initMocks(this);
     }
 
-    @Test
+    // For each test the following are indicated:
+    // <test double>, <verification>, <approach>
+    
+    @Test // mock, behavioral, mockist
     void findOwnerTest() {
         int ownerId = 6;
         petManagerWithMocks.findOwner(ownerId);
         verify(owners).findById(ownerId);
     }
 
-    @Test
+    @Test // mock + dummy, behavioral, mockist
     void newPetTest()
     {
         Owner owner = mock(Owner.class);
@@ -68,14 +71,14 @@ class PetManagerTest {
         verify(owner).addPet(pet);
     }
 
-    @Test
+    @Test // mock, behavioral, mockist
     void findPetTest() {
         int petId = 11;
         petManagerWithMocks.findPet(petId);
         verify(pets).get(petId);
     }
 
-    @Test
+    @Test // mock + dummy, behavioral, mockist
     void savePetTest() {
         Owner owner = mock(Owner.class);
         Pet pet = mock(Pet.class);
@@ -83,7 +86,7 @@ class PetManagerTest {
         verify(owner).addPet(pet);
     }
 
-    @Test
+    @Test // spy, behavioral, classic
     void savePetTestWithActualPet() {
         Owner owner = spy(Owner.class);
         Pet pet = new Pet();
@@ -101,7 +104,7 @@ class PetManagerTest {
         @MockBean
         PetManager mockPetManager;
 
-        @Test
+        @Test // mock, behavioral, mockist
         void getOwnerPets() {
             int ownerId = 5;
             mockPetManager.findOwner(ownerId);
@@ -116,7 +119,7 @@ class PetManagerTest {
         @Autowired
         PetManager petManager;
 
-        @Test
+        @Test // (almost) fake object, state, classic
         void getOwnerPetTypesTest() {
             int ownerId = 3;
             Set<PetType> actual = petManager.getOwnerPetTypes(ownerId);
@@ -130,7 +133,7 @@ class PetManagerTest {
             assertTrue(ptActual.getName().equals(petType.getName()));
         }
 
-        @Test
+        @Test // (almost) fake object, state, classic
         void getVisitsBetweenTest() {
             int petId = 8;
             LocalDate startDate = LocalDate.of(2000, 1, 1);

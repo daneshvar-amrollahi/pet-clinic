@@ -24,6 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -119,12 +120,12 @@ class PetManagerTest {
         @Autowired
         PetManager petManager;
 
-        @Test // (almost) fake object, state, classic
+        @Test // (almost) fake object + stub, state, classic
         void getOwnerPetTypesTest() {
             int ownerId = 3;
             Set<PetType> actual = petManager.getOwnerPetTypes(ownerId);
-            PetType petType = new PetType();
-            petType.setName("dog");
+            PetType petType = mock(PetType.class);
+            when(petType.getName()).thenReturn("dog");
             Set<PetType> expected = new HashSet<>();
             expected.add(petType);
             

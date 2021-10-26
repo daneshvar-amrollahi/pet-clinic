@@ -2,6 +2,10 @@ package org.springframework.samples.petclinic.owner;
 
 import static org.junit.Assume.assumeTrue;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.spy;
+import static org.mockito.Mockito.verify;
+
 import java.util.*;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -91,5 +95,21 @@ class OwnerTest {
         owner.addPet(pet);
 
         assertEquals(pet, owner.getPet(name));
+    }
+
+    @Test
+    public void testGetPetBehavioral() {
+        Pet pet = mock(Pet.class);
+        owner.addPet(pet);
+        verify(pet).setOwner(owner);
+    }
+
+    @Test
+    public void testGetPetState() {
+        Pet pet = new Pet();
+        owner.addPet(pet);
+
+        assertTrue(owner.getPets().contains(pet));
+        assertEquals(owner, pet.getOwner());
     }
 }

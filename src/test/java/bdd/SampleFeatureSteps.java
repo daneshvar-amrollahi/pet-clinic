@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class SampleFeatureSteps {
 
 	@Autowired
-	PetService petService;
+	PetManager petManager;
 
 	@Autowired
 	OwnerRepository ownerRepository;
@@ -47,12 +47,12 @@ public class SampleFeatureSteps {
 	public void hePerformsSavePetService() {
 		Pet pet = new Pet();
 		pet.setType(petType);
-		petService.savePet(pet, gholam);
+		petManager.savePet(pet, gholam);
 	}
 
 	@Then("The pet is saved successfully")
 	public void petIsSaved() {
-		assertNotNull(petService.findPet(petType.getId()));
+		assertNotNull(petManager.findPet(petType.getId()));
 	}
 
 	@Given("There is some predefined pet types like {string}")

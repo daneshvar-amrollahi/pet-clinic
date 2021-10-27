@@ -133,21 +133,33 @@ class PetManagerTest {
             PetType ptActual = actual.iterator().next();
             assertTrue(ptActual.getName().equals(petType.getName()));
         }
-
-        @Test // (almost) fake object, state, classic
-        void getVisitsBetweenTest() {
-            int petId = 8;
-            LocalDate startDate = LocalDate.of(2000, 1, 1);
-            LocalDate endDate = LocalDate.of(2020, 12, 12);
-            List<Visit> actual = petManager.getVisitsBetween(petId, startDate, endDate);
-            
-            assumeTrue(actual.size() > 0);
-            String visit1descr = actual.get(0).getDescription();
-            String visit2descr = actual.get(1).getDescription();
-            assertTrue(visit1descr.equals("rabies shot"));
-            assertTrue(visit2descr.equals("neutered"));
-        }
     }
 
-    
+    @Test // stub + dummy, state, classic
+    void getVisitsBetweenTest() {
+        int petId = 100;
+        Pet pet = new Pet();
+        when(pets.get(petId)).thenReturn(pet);
+
+        Visit v1 = new Visit();
+		Visit v2 = new Visit();
+		Visit v3 = new Visit();
+        
+        v1.setDate(LocalDate.of(2000, 1, 21));
+		pet.addVisit(v1);
+        v2.setDate(LocalDate.of(2001, 4, 17));
+        pet.addVisit(v2);
+		v3.setDate(LocalDate.of(1999, 4, 19));
+        pet.addVisit(v3);
+
+        LocalDate startDate = LocalDate.of(2000, 1, 1);
+        LocalDate endDate = LocalDate.of(2001, 12, 29);
+        List<Visit> actual = petManagerWithMocks.getVisitsBetween(petId, startDate, endDate);
+        
+        List<Visit> expected = new ArrayList<>();
+        expected.add(v1);
+        expected.add(v2);
+        
+        assertEquals(expected, actual);
+    }
 }

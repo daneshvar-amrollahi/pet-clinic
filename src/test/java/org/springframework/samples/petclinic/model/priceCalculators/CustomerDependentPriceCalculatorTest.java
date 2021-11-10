@@ -40,7 +40,6 @@ public class CustomerDependentPriceCalculatorTest {
 		pet1.setType(frequentType);
 		pet1.setBirthDate(new LocalDate(2020, 1, 1).toDate());
 
-
 		Pet pet2 = new Pet();
 		pet2.setType(rareType);
 		pet2.setBirthDate(new LocalDate(2018, 1, 1).toDate());
@@ -101,11 +100,9 @@ public class CustomerDependentPriceCalculatorTest {
 
 	@Test
 	public void testCalcPrice3() {
-
 		Pet pet1 = new Pet();
 		pet1.setType(frequentType);
 		pet1.setBirthDate(new LocalDate(2020, 1, 1).toDate());
-
 
 		Pet pet2 = new Pet();
 		pet2.setType(rareType);
@@ -163,7 +160,6 @@ public class CustomerDependentPriceCalculatorTest {
 		pets.add(pet6);
 
 		assertTrue(8.64 == customerDependentPriceCalculator.calcPrice(pets, 0, 1, silverUserType));
-
 	}
 
 }

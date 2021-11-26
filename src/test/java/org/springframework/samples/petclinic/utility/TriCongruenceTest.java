@@ -169,6 +169,25 @@ class TriCongruenceTest {
 		assertTrue(predicate2(1, 2, 4));
 	}
 
+
+
+
+	// A counter-example to show that CUTPNFP does not subsume UTPC.
+	// f = ab+cd. 
+	// Implicant: ab
+	// CUPTPNP set: {T T F T, T F F T, F T F T } combined with {F T T T, F T T F, F T F T }
+	// for implicant cd. 
+	// Note that there is a near false point in common; Hence the
+	// resulting CUTPNFP set has five elements: {T T F T, T F F T, F T F T, F T T T, F T T F }.
+
+	// To consider UTPC we need to compute a minimal form for ~f.
+	//~f = ~a~c + ~a~d + ~b~c + ~b~d
+
+	// Note that we have 4 prime implicants in ~f , along with 2 prime implicants in f ; hence
+	// we need exactly 6 tests for UTPC. The CUTPNFP set has only 5; hence CUTPNFP
+	// does not subsume UTPC.
+
+
 	private static boolean questionTwo(boolean a, boolean b, boolean c, boolean d, boolean e) {
 		boolean predicate = false;
 //		predicate = a predicate with any number of clauses
@@ -181,20 +200,6 @@ class TriCongruenceTest {
 	// As this predicate is symmetric, replacing TF with FF in the above set
 	// can make CACC be satisfied w.r.t e as well.
 
-	//A counter-example to show that CUTPNFP does not subsume UTPC.
-	// f = ab+cd. 
-	//Implicant: ab
-	// CUPTPNP set: {T T F T, T F F T, F T F T } combined with {F T T T, F T T F, F T F T }
-	// for implicant cd. 
-	// Note that there is a near false point in common; Hence the
-	// resulting CUTPNFP set has five elements: {T T F T, T F F T, F T F T, F T T T, F T T F }.
-
-	// To consider UTPC we need to compute a minimal form for ~f.
-	//~f = ~a~c + ~a~d + ~b~c + ~b~d
-
-	// Note that we have 4 prime implicants in ~f , along with 2 prime implicants in f ; hence
-	// we need exactly 6 tests for UTPC. The CUTPNFP set has only 5; hence CUTPNFP
-	// does not subsume UTPC.
 
 
 	@CACC(

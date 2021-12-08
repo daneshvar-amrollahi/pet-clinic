@@ -1,4 +1,6 @@
 package org.springframework.samples.petclinic.owner;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -36,6 +38,7 @@ class PetControllerTests {
 		when(this.owners.findById(1)).thenReturn(owner);
 		ResultActions resultActions = mockMvc.perform(get("/owners/1/pets/new"));
 		resultActions.andExpect(status().isOk());
+		resultActions.andExpect(model().attributeExists("pet"));
 	}
 
 	@Test
@@ -59,6 +62,8 @@ class PetControllerTests {
 				.param("birthDate", "2019-11-18")
 			);
 		resultActions.andExpect(status().is3xxRedirection());
+		assertEquals(owner.getPets().size(), 1);
+		assertEquals("Alfred", owner.getPets().get(0).getName());
 	}
 
 	@Test

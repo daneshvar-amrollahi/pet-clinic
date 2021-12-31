@@ -11,7 +11,7 @@ import org.springframework.samples.petclinic.owner.PetType;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PetServiceStepdefs {
+public class FindOwnerStepdefs {
 	@Autowired
 	PetService petService;
 
